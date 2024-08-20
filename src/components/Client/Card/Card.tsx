@@ -1,8 +1,6 @@
-import React from "react";
-
 export const Card = () => {
   return (
-    <div className="w-[23.5%] min-h-[360px] h-auto flex flex-col shadow-lg shadow-gray-400">
+    <div className="w-full md:w-[45%] lg:w-[23.5%] min-h-[360px] h-auto flex flex-col shadow-lg shadow-gray-400">
       <div className="w-full h-[60%]">
         <img
           className="w-full h-full object-cover"

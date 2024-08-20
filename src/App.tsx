@@ -6,6 +6,7 @@ import "./App.css";
 import { HomeNavbar } from "./components/Client/HomeNavbar/HomeNavbar";
 import { HomeImagesAlbum } from "./components/Client/HomeImagesAlbum/HomeImagesAlbum";
 import { HomeFooter } from "./components/Client/HomeFooter/HomeFooter";
+import { MobileHomeNavbar } from "./components/Client/HomeNavbar/MobileHomeNavbar";
 
 function App() {
   return (

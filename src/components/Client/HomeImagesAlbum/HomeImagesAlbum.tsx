@@ -47,7 +47,7 @@ export const HomeImagesAlbum = () => {
 
   return (
     <div
-      className={`relative flex flex-col w-full bg-cover bg-center ${isAdminSide ? "hidden" : ""}`}
+      className={`relative hidden flex-col w-full bg-cover bg-center md:flex`}
       style={{ backgroundImage: `url(${imageToShow})`, height: "540px" }}
     >
       <div className="w-full h-1/4">

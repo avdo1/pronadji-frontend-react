@@ -12,7 +12,9 @@ const generateRoute = (
 };
 const routeNames = {
   home: (params?: Record<string, string>): string =>
-    generateRoute("/home", params),
+    generateRoute("/naslovna", params),
+  admin: (params?: Record<string, string>): string =>
+    generateRoute("/admin", params),
   eventi: (params?: Record<string, string>): string =>
     generateRoute("/eventi", params),
   oNama: (params?: Record<string, string>): string =>
@@ -21,8 +23,6 @@ const routeNames = {
     generateRoute("/usluge", params),
   kontakt: (params?: Record<string, string>): string =>
     generateRoute("/kontakt", params),
-  admin: (params?: Record<string, string>): string =>
-    generateRoute("/admin", params),
   example: (params?: Record<string, string>): string =>
     generateRoute("/example", params),
   pageNotFound: (params?: Record<string, string>): string =>

@@ -10,8 +10,10 @@ import { EventsPage } from "../pages/Events";
 import { AboutPage } from "../pages/About";
 import ServicesPage from "../pages/Services";
 import { ContactPage } from "../pages/Contact";
+import { AdminPage } from "../pages/Admin";
 
 const publicRoutes = ["/login", "/reset-password"];
+const privateRoute = "/admin";
 
 export const RootRouter = () => {
   const { user, isUserFetched, isUserAuthenticated } = useContext(UserContext);
@@ -39,6 +41,7 @@ export const RootRouter = () => {
 
   return (
     <Routes>
+      <Route path={routeNames.admin()} element={<AdminPage />} />
       <Route path={routeNames.home()} element={<HomePage />} />
       <Route path={routeNames.eventi()} element={<EventsPage />} />
       <Route path={routeNames.oNama()} element={<AboutPage />} />

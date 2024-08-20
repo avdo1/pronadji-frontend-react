@@ -1,7 +1,6 @@
-"use client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Clogo } from "../../../assets/ImagesFactory";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export const HomeFooter = () => {
   const [isAdminSide, setIsAdminSide] = useState<boolean>(false);
@@ -19,32 +18,25 @@ export const HomeFooter = () => {
   }
 
   return (
-    <div
-      className={`w-full h-36 flex ${
-        !isAdminSide ? "bg-black" : "hidden"
-      } md:flex md:flex-row`}
-    >
-      <div className="w-1/2 h-full flex items-center pl-3">
+    <div className={`hidden md:flex flex-row bg-black w-full h-36 flex`}>
+      <div className="hidden lg:flex w-1/2 h-full flex items-center pl-3">
         <Clogo />
       </div>
-      <div className="w-1/2 h-full flex items-center justify-start gap-6">
+      <div className="w-full lg:w-1/2 h-full flex items-center justify-center lg:justify-start gap-6">
         <div className="flex items-center justify-center text-white text-xl font-normal">
-          <a href="/">Naslovna</a>
+          <Link to="/naslovna">Naslovna</Link>
         </div>
         <div className="flex items-center justify-center text-white text-xl font-normal">
-          <a href="/lokali">Lokali</a>
+          <Link to="/eventi">Eventi</Link>
         </div>
         <div className="flex items-center justify-center text-white text-xl font-normal">
-          <a href="/eventi">Eventi</a>
+          <Link to="/oNama">O nama</Link>
         </div>
         <div className="flex items-center justify-center text-white text-xl font-normal">
-          <a href="/oNama">O nama</a>
+          <Link to="/usluge">Paketi usluga</Link>
         </div>
         <div className="flex items-center justify-center text-white text-xl font-normal">
-          <a href="/usluge">Paketi usluga</a>
-        </div>
-        <div className="flex items-center justify-center text-white text-xl font-normal">
-          <a href="/kontakt">Kontakt</a>
+          <Link to="/kontakt">Kontakt</Link>
         </div>
       </div>
     </div>

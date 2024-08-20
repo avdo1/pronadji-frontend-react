@@ -35,6 +35,8 @@ export const LogoutIcon = (
     y="0px"
     viewBox="0 0 1000 1000"
     enableBackground="new 0 0 1000 1000"
+    width="30px"
+    height="40px"
   >
     <metadata> Svg Vector Icons : http://www.onlinewebfonts.com/icon </metadata>
     <g>
@@ -100,6 +102,10 @@ export const EditPen = (
 
 export const NLogo = () => <img src={NlogoImage} alt="app-logo" />;
 
+export const NLogoNav = () => (
+  <img src={NlogoImage} alt="app-logo" className="w-[130px]" />
+);
+
 export const Clogo = () => (
-  <img src={ClogoImage} alt="app-logo" className="w-[400px] h-[100px]" />
+  <img src={ClogoImage} alt="app-logo" className="w-[330px] h-[90px]" />
 );
