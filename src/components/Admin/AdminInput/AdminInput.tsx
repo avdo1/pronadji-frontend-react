@@ -23,7 +23,8 @@ export const AdminInput = ({
 }: Props) => {
   return (
     <div
-      className={`flex flex-col ${customWidth ? `w-[${customWidth}]` : "w-[370px]"} h-[80px] sm:w-[90%] sm:h-[80px] md:h-[70px]`}
+      className={`flex flex-col ${customWidth ? `w-[${customWidth}] max-w-[${customWidth}]` : "w-[370px]"}  h-[80px] sm:w-[90%] sm:h-[80px] md:h-[70px]`}
+      style={customWidth ? { width: customWidth } : {}}
     >
       <div className="flex items-center h-[30%] text-gray-500 font-semibold text-lg">
         <p>

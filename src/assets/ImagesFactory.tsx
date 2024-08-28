@@ -1,5 +1,6 @@
 import NlogoImage from "./NLogo.png";
 import ClogoImage from "./Clogo.png";
+import ZlogoImage from "./Zlogo.png";
 
 export const CloseModalIcon = (
   <svg
@@ -108,4 +109,8 @@ export const NLogoNav = () => (
 
 export const Clogo = () => (
   <img src={ClogoImage} alt="app-logo" className="w-[330px] h-[90px]" />
+);
+
+export const Zlogo = () => (
+  <img src={ZlogoImage} alt="app-logo" className="h-4/5 w-4/5" />
 );

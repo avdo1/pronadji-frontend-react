@@ -1,4 +1,5 @@
 import React, { Dispatch, SetStateAction } from "react";
+import { Zlogo } from "../../../assets/ImagesFactory";
 // import AdminMobileSidebar from '../adminMobileSidebar/AdminMobileSidebar'
 
 type Props = {
@@ -51,11 +52,7 @@ export const Sidebar = ({
           </div>
 
           <div className="h-20 w-full flex items-center justify-center mt-2">
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/c/c6/Glovo_logo.png"
-              alt="logo"
-              className="h-4/5 w-4/5"
-            />
+            <Zlogo />
           </div>
         </div>
       </div>
