@@ -3,7 +3,7 @@ export const ServiceCard = () => {
 
   return (
     <div className="flex flex-col max-w-xs min-w-[23%] min-h-[650px] shadow-lg">
-      <div className="flex items-center justify-center h-[20%] bg-gradient-to-br from-orange-500 to-white">
+      <div className="flex items-center justify-center h-[20%] bg-service-card-header">
         <p className="font-light text-4xl text-white">
           <span className="font-bold">2</span> Mjeseci
         </p>

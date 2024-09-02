@@ -14,7 +14,7 @@ export const AdminHeader = ({
   isCreateForm,
 }: Props) => {
   const logout = () => {
-    window.localStorage.removeItem("access_token");
+    window.localStorage.removeItem("token");
     window.location.replace("/");
   };
 

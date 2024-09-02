@@ -50,7 +50,7 @@ export const DnevnePonudeTable = ({ columns, data, skipPageReset }: Props) => {
                             : "w-full h-full flex items-center justify-center text-center"
                         }
                       >
-                        <p className="font-sans font-extrabold text-xl text-gray-500">
+                        <p className="font-sans font-bold text-lg text-gray-500">
                           {column.render("Header")}
                           <TableSortLabel
                             active={column.isSorted}
@@ -82,7 +82,7 @@ export const DnevnePonudeTable = ({ columns, data, skipPageReset }: Props) => {
                               key={lidx}
                             >
                               <div className="flex items-center justify-center w-full h-full">
-                                <p className="font-sans font-semibold text-lg text-gray-600">
+                                <p className="font-sans font-semibold text-base text-gray-400">
                                   {cell.render("Cell")}
                                 </p>
                               </div>
@@ -97,7 +97,7 @@ export const DnevnePonudeTable = ({ columns, data, skipPageReset }: Props) => {
                             key={lidx}
                           >
                             <div className="w-full h-full flex items-center justify-start text-center">
-                              <p className="font-sans font-semibold text-lg text-gray-600">
+                              <p className="font-sans font-semibold text-base text-gray-400">
                                 {cell.render("Cell")}
                               </p>
                             </div>

@@ -51,7 +51,7 @@ export const OglasiZaPosaoTable = ({ columns, data, skipPageReset }: Props) => {
                         }
                       >
                         <p
-                          className={`font-sans font-extrabold text-xl ${column.id === "action1" || column.id === "action" ? "text-gray-600" : "text-gray-500"}`}
+                          className={`font-sans font-bold text-lg ${column.id === "action1" || column.id === "action" ? "text-gray-500" : "text-gray-500"}`}
                         >
                           {column.render("Header")}
                           <TableSortLabel
@@ -84,7 +84,7 @@ export const OglasiZaPosaoTable = ({ columns, data, skipPageReset }: Props) => {
                               key={lidx}
                             >
                               <div className="flex items-center justify-center w-full h-full">
-                                <p className="font-sans font-semibold text-lg text-gray-600">
+                                <p className="font-sans font-semibold text-base text-gray-400">
                                   {cell.render("Cell")}
                                 </p>
                               </div>
@@ -99,7 +99,7 @@ export const OglasiZaPosaoTable = ({ columns, data, skipPageReset }: Props) => {
                             key={lidx}
                           >
                             <div className="w-full h-full flex items-center justify-start text-center">
-                              <p className="font-sans font-semibold text-lg text-gray-600">
+                              <p className="font-sans font-semibold text-base text-gray-400">
                                 {cell.render("Cell")}
                               </p>
                             </div>

@@ -43,7 +43,7 @@ export const PricesTable = ({ columns, data, skipPageReset }: Props) => {
                     key={`column-${cidx}`}
                   >
                     <div className="flex items-center justify-center w-full h-full text-center">
-                      <p className="font-sans font-bold text-xl leading-4 text-gray-600">
+                      <p className="font-sans font-bold text-lg text-gray-500">
                         {column.render("Header")}
                         <TableSortLabel
                           active={column.isSorted}
@@ -103,7 +103,7 @@ export const PricesTable = ({ columns, data, skipPageReset }: Props) => {
                                     {dataToShow.map((element: any) => (
                                       <p
                                         key={element.id}
-                                        className="font-sans font-semibold text-lg leading-6 text-gray-600"
+                                        className="font-sans font-semibold text-base text-gray-400"
                                       >
                                         {element[keyOfElement] || "-"}
                                       </p>
@@ -144,7 +144,7 @@ export const PricesTable = ({ columns, data, skipPageReset }: Props) => {
                             {cell.render(() => {
                               return (
                                 <div className="flex items-start w-full h-full">
-                                  <p className="font-sans font-semibold text-lg leading-6 text-gray-600">
+                                  <p className="font-sans font-semibold text-base text-gray-400">
                                     {cell.render("Cell")}
                                   </p>
                                 </div>

@@ -11,6 +11,7 @@ import { DodajEvent } from "../components/Admin/Eventi/DodajEvent";
 import { DodajNovuKategoriju } from "../components/Admin/Cjenovnik/DodajNovuKategoriju";
 import { DodajDnevnuPonudu } from "../components/Admin/DnevnePonude/DodajDnevnuPonudu";
 import { DodajNoviOglas } from "../components/Admin/OglasiZaPosao/DodajNoviOglas";
+// import { WithAuthProvider } from "../providers/WithAuthProvider";
 
 export const AdminPage = () => {
   const sidebarElements = [
@@ -62,6 +63,7 @@ export const AdminPage = () => {
   }, [selectedElement]);
 
   return (
+    // <WithAuthProvider>
     <div className="w-full flex flex-row h-screen">
       <Sidebar
         elements={sidebarElements}
@@ -94,5 +96,6 @@ export const AdminPage = () => {
         )}
       </div>
     </div>
+    // </WithAuthProvider>
   );
 };

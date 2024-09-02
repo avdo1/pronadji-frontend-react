@@ -1,7 +1,8 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { useStorelessFetch } from "../../hooks/fetch";
 import { ModalComponent } from "./ModalComponent";
 import { Loader } from "../Loader/Loader";
+import { useMutation } from "@tanstack/react-query";
+import { signup } from "../../api";
 
 type Props = {
   open: boolean;
@@ -9,12 +10,27 @@ type Props = {
 };
 
 export const SigninModal = ({ open, setIsOpen }: Props) => {
-  const [signUpData, doSignup] = useStorelessFetch("signup");
   const [userName, setUserName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [termsAccepted, setTermsAccepted] = useState(false);
+
+  const {
+    mutate: doSignup,
+    data,
+    isPending,
+    isSuccess,
+  } = useMutation({
+    mutationFn: signup,
+    onSuccess: (data) => {
+      setIsOpen(false);
+      window.location.replace("/admin");
+    },
+    onError: (error) => {
+      //
+    },
+  });
 
   const handleSignup = async () => {
     if (termsAccepted) {
@@ -31,14 +47,14 @@ export const SigninModal = ({ open, setIsOpen }: Props) => {
   };
 
   useEffect(() => {
-    if (signUpData.data) {
+    if (data?.data) {
       window.location.replace("/");
     }
-  }, [signUpData]);
+  }, [data]);
 
   return (
     <ModalComponent open={open} setIsOpen={setIsOpen}>
-      {signUpData.loading && <Loader />}
+      {isPending && <Loader />}
       <div className="p-6 w-full max-w-sm mx-auto bg-white rounded-lg shadow-lg">
         <h2 className="text-center text-xl font-bold text-gray-900 uppercase mb-4">
           Registrujte svoj nalog

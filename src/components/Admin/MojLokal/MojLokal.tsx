@@ -1,77 +1,49 @@
 import { useState } from "react";
 import { AdminInput } from "../AdminInput/AdminInput";
+import { useMutation } from "@tanstack/react-query";
+import { createLocal } from "../../../api";
 
 export const MojLokal = () => {
   const [mojLokalObj, setMojLokalObj] = useState({
-    nazivLokala: "",
-    tipLokala: "",
-    sekundarniTipLokala: "",
-    lokacija: "",
-    kratkiOpis: "",
-    logo: "",
+    name: "",
     email: "",
-    telefon: "",
-    radnoVrijeme: "",
+    phone: "",
+    location: "",
+    description: "",
+    workingHours: "",
     facebook: "",
+    twitter: "",
     instagram: "",
   });
+
+  const {
+    mutate: doCreateLocal,
+    isSuccess,
+    isPending,
+  } = useMutation({
+    mutationFn: (data: typeof mojLokalObj) => createLocal(data),
+    onSuccess: () => {
+      window.location.replace("/admin");
+    },
+    onError: (error) => {
+      console.error("Error creating local:", error);
+    },
+  });
+
+  const onCreate = async () => {
+    doCreateLocal(mojLokalObj);
+  };
 
   return (
     <div className="w-full flex flex-row pt-10 pb-5 sm:pt-10 sm:pb-5 flex-wrap">
       <div className="flex flex-col w-full sm:w-1/2 pl-5 gap-5">
         <AdminInput
           title="Naziv lokala"
-          value={mojLokalObj.nazivLokala}
+          value={mojLokalObj.name}
           setValue={setMojLokalObj}
           valueObj={mojLokalObj}
-          keyOfValue="nazivLokala"
+          keyOfValue="name"
           placeholder="Dodajte naziv svog lokala"
-          required
-        />
-        <AdminInput
-          title="Tip lokala"
-          value={mojLokalObj.tipLokala}
-          setValue={setMojLokalObj}
-          valueObj={mojLokalObj}
-          keyOfValue="tipLokala"
-          placeholder="Npr: Bar, Pub, Restoran"
-          required
-        />
-        <AdminInput
-          title="Sekundarni tip lokala"
-          value={mojLokalObj.sekundarniTipLokala}
-          setValue={setMojLokalObj}
-          valueObj={mojLokalObj}
-          keyOfValue="sekundarniTipLokala"
-          placeholder="Vaš lokal sadrzi jos (max 5 odabira)"
-        />
-        <AdminInput
-          title="Lokacija"
-          value={mojLokalObj.lokacija}
-          setValue={setMojLokalObj}
-          valueObj={mojLokalObj}
-          keyOfValue="lokacija"
-          placeholder="Adresa lokala"
-          required
-        />
-        <AdminInput
-          title="Kratki opis"
-          value={mojLokalObj.kratkiOpis}
-          setValue={setMojLokalObj}
-          valueObj={mojLokalObj}
-          keyOfValue="kratkiOpis"
-          placeholder="Unesite kratki opis svog lokala"
-          required
-        />
-      </div>
-      <div className="flex flex-col w-full sm:w-1/2 pl-5 gap-5">
-        <AdminInput
-          title="Logo"
-          value={mojLokalObj.logo}
-          valueObj={mojLokalObj}
-          keyOfValue="logo"
-          setValue={setMojLokalObj}
-          placeholder="Uploadujte svoj logo"
           required
         />
         <AdminInput
@@ -85,19 +57,39 @@ export const MojLokal = () => {
         />
         <AdminInput
           title="Telefon"
-          value={mojLokalObj.telefon}
+          value={mojLokalObj.phone}
           setValue={setMojLokalObj}
           valueObj={mojLokalObj}
-          keyOfValue="telefon"
+          keyOfValue="phone"
           placeholder="Broj telefona lokala"
           required
         />
         <AdminInput
-          title="Radno vrijeme"
-          value={mojLokalObj.radnoVrijeme}
+          title="Lokacija"
+          value={mojLokalObj.location}
           setValue={setMojLokalObj}
           valueObj={mojLokalObj}
-          keyOfValue="radnoVrijeme"
+          keyOfValue="location"
+          placeholder="Adresa lokala"
+          required
+        />
+        <AdminInput
+          title="Kratki opis"
+          value={mojLokalObj.description}
+          setValue={setMojLokalObj}
+          valueObj={mojLokalObj}
+          keyOfValue="description"
+          placeholder="Unesite kratki opis svog lokala"
+          required
+        />
+      </div>
+      <div className="flex flex-col w-full sm:w-1/2 pl-5 gap-5">
+        <AdminInput
+          title="Radno vrijeme"
+          value={mojLokalObj.workingHours}
+          setValue={setMojLokalObj}
+          valueObj={mojLokalObj}
+          keyOfValue="workingHours"
           placeholder="Radno vrijeme lokala"
           required
         />
@@ -111,6 +103,14 @@ export const MojLokal = () => {
           required
         />
         <AdminInput
+          title="Twitter"
+          value={mojLokalObj.twitter}
+          setValue={setMojLokalObj}
+          valueObj={mojLokalObj}
+          keyOfValue="twitter"
+          placeholder="Twitter page vaseg lokala"
+        />
+        <AdminInput
           title="Instagram"
           value={mojLokalObj.instagram}
           setValue={setMojLokalObj}
@@ -119,7 +119,12 @@ export const MojLokal = () => {
           placeholder="Instagram page vaseg lokala"
           required
         />
-        <button className="h-12 w-48 bg-orange-600 text-white font-light text-lg rounded-md outline-none">
+        <button
+          onClick={() => {
+            onCreate();
+          }}
+          className="h-12 w-48 bg-orange-600 text-white font-light text-lg rounded-md outline-none"
+        >
           KREIRAJ SVOJ LOKAL
         </button>
       </div>

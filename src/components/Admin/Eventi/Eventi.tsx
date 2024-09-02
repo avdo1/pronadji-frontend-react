@@ -104,7 +104,7 @@ export const Eventi = () => {
         data={mockedBackendDataNadolazeci}
         skipPageReset={false}
       />
-      <div className="w-full h-10 flex items-center justify-start pb-8 mt-5">
+      <div className="w-full h-10 flex items-center justify-start pb-8 mt-10">
         <p className="text-gray-500 font-sans font-light text-3xl">
           Prosli eventi
         </p>

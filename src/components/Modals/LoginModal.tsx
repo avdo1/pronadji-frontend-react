@@ -1,7 +1,9 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { useStorelessFetch } from "../../hooks/fetch";
+import { Dispatch, SetStateAction, useState } from "react";
 import { ModalComponent } from "./ModalComponent";
 import { Loader } from "../Loader/Loader";
+import { useGlobalContext } from "../../context/store";
+import { useMutation } from "@tanstack/react-query";
+import { login } from "../../api";
 
 // import ValidationErrorWrapper from '@components/mainComponents/validationError/ValidationErrorWrapper'
 
@@ -13,50 +15,46 @@ type Props = {
 export const LoginModal = ({ open, setIsOpen }: Props) => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [loginData, doLogin] = useStorelessFetch("login");
-  //   const { access_token, setAccessToken } = useGlobalContext()
+  const { access_token, setAccessToken } = useGlobalContext();
   const [validationErrors, setValidationErrors] = useState<any>({
     hasErrors: false,
     errorData: undefined,
   });
 
-  const prijaviSe = async () => {
-    // const hasError = false;
-    // if (!hasError) {
-    //   setValidationErrors({ hasErrors: false, errorData: undefined })
-    //   await doLogin({
-    //     email: userName,
-    //     password: password,
-    //     isRegularLogin: true,
-    //   })
-    // } else {
-    //   setValidationErrors({
-    //     hasErrors: true,
-    //     errorData: {
-    //       userNameError: hasError.filter(
-    //         (error: any) => error.field === 'userName',
-    //       )[0]?.message,
-    //       passwordError: hasError.filter(
-    //         (error: any) => error.field === 'password',
-    //       )[0]?.message,
-    //     },
-    //   })
-    // }
-  };
+  const {
+    mutate: doLogin,
+    isSuccess,
+    isPending,
+  } = useMutation({
+    mutationFn: login,
+    onSuccess: (data) => {
+      console.log("DATA --> ", data);
+      setAccessToken(data.access_token);
+      setIsOpen(false);
+      window.location.replace("/admin");
+    },
+    onError: (error) => {
+      setValidationErrors({
+        hasErrors: true,
+        errorData: {
+          userNameError: "Invalid username or password",
+          passwordError: "Invalid username or password",
+        },
+      });
+    },
+  });
 
-  useEffect(() => {
-    if (loginData.loaded) {
-      //   if (!access_token) {
-      //     setAccessToken(loginData.data?.access_token)
-      //     setIsOpen(false)
-      //     window.location.replace('/admin')
-      //   }
-    }
-  }, [loginData]);
+  const prijaviSe = async () => {
+    await doLogin({
+      email: userName,
+      password: password,
+      isRegularLogin: true,
+    });
+  };
 
   return (
     <ModalComponent open={open} setIsOpen={setIsOpen}>
-      {loginData.loading && <Loader />}
+      {isPending && <Loader />}
       <div className="p-5 flex flex-col gap-4">
         <div className="text-center text-lg font-bold uppercase mb-4">
           prijavite se u svoj nalog
