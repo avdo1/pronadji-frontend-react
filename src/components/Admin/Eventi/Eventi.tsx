@@ -1,27 +1,65 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { EditPen, TrashCan } from "../../../assets/ImagesFactory";
 import { EventsTable } from "./EventsTable";
+import {
+  deleteEventById,
+  getActiveEventsByLocalId,
+  getPassedEventsByLocalId,
+} from "../../../api";
+import { Loader } from "../../Loader/Loader";
+interface EventiProp {
+  localId: string;
+  setEditElement: React.Dispatch<React.SetStateAction<{}>>;
+}
+export const Eventi = ({ localId, setEditElement }: EventiProp) => {
+  const ActionDiv = ({ row }: any) => {
+    const queryClient = useQueryClient();
+    const { mutate: doDeleteEvent } = useMutation({
+      mutationFn: (eventId: string) => deleteEventById(eventId),
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ["getPassedEventsByLocalId", localId],
+        });
+        queryClient.invalidateQueries({
+          queryKey: ["getActiveEventsByLocalId", localId],
+        });
+      },
+    });
 
-export const Eventi = () => {
-  const ActionDiv = ({ row }: any) => (
-    <div
-      className="flex items-center justify-center w-full h-full"
-      {...row.getToggleRowExpandedProps({})}
-    >
-      <div className="w-8 h-8 cursor-pointer">{TrashCan}</div>
-      <div className="w-8 h-8 cursor-pointer">{EditPen}</div>
-    </div>
-  );
+    const handleDelete = () => {
+      const eventId = row.original.id;
+      doDeleteEvent(eventId);
+    };
+    return (
+      <div
+        className="flex items-center justify-center gap-4 w-full h-full"
+        {...row.getToggleRowExpandedProps({})}
+      >
+        <div onClick={handleDelete} className="w-8 h-8 cursor-pointer h-full">
+          {TrashCan}
+        </div>
+        <div
+          onClick={() => {
+            setEditElement(row.original);
+          }}
+          className="w-8 h-8 cursor-pointer h-full"
+        >
+          {EditPen}
+        </div>
+      </div>
+    );
+  };
 
   const columnsNadolazeci = [
     {
       Header: "Naziv eventa",
-      accessor: "nazivEventa",
-      id: "nazivEventa",
+      accessor: "name",
+      id: "name",
     },
     {
       Header: "Datum eventa",
-      accessor: "datumEventa",
-      id: "datumEventa",
+      accessor: "startDate",
+      id: "startDate",
     },
     {
       id: "action",
@@ -33,8 +71,8 @@ export const Eventi = () => {
   const columnsProsli = [
     {
       Header: "Naziv eventa",
-      accessor: "nazivEventa",
-      id: "nazivEventa",
+      accessor: "name",
+      id: "name",
     },
     {
       Header: "Povezana galerija",
@@ -43,8 +81,8 @@ export const Eventi = () => {
     },
     {
       Header: "Datum eventa",
-      accessor: "datumEventa",
-      id: "datumEventa",
+      accessor: "startDate",
+      id: "startDate",
     },
     {
       id: "action",
@@ -53,44 +91,22 @@ export const Eventi = () => {
     },
   ];
 
-  const mockedBackendDataProsli = [
-    {
-      id: "123",
-      nazivEventa: "Prosli event 1",
-      povezanaGalerija: "galerija1@galerija",
-      datumEventa: "01-07-2023",
-    },
-    {
-      id: "223",
-      nazivEventa: "Prosli event 2",
-      povezanaGalerija: "galerija2@galerija",
-      datumEventa: "01-07-2023",
-    },
-    {
-      id: "323",
-      nazivEventa: "Prosli event 3",
-      povezanaGalerija: "galerija3@galerija",
-      datumEventa: "01-07-2023",
-    },
-  ];
-
-  const mockedBackendDataNadolazeci = [
-    {
-      id: "123",
-      nazivEventa: "Nadolazeci event 1",
-      datumEventa: "01-07-2023",
-    },
-    {
-      id: "223",
-      nazivEventa: "Nadolazeci event 2",
-      datumEventa: "01-07-2023",
-    },
-    {
-      id: "323",
-      nazivEventa: "Nadolazeci event 3",
-      datumEventa: "01-07-2023",
-    },
-  ];
+  const { data: passedEventsData, isLoading: pasedIsLoading } = useQuery({
+    queryKey: ["getPassedEventsByLocalId", localId],
+    queryFn: () => getPassedEventsByLocalId(localId),
+  });
+  const { data: activeEventsData, isLoading: activeIsLoading } = useQuery({
+    queryKey: ["getActiveEventsByLocalId", localId],
+    queryFn: () => getActiveEventsByLocalId(localId),
+  });
+  const isLoading = activeIsLoading || pasedIsLoading;
+  if (isLoading) {
+    return (
+      <div>
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div className="w-full flex flex-col p-5">
@@ -101,7 +117,7 @@ export const Eventi = () => {
       </div>
       <EventsTable
         columns={columnsNadolazeci}
-        data={mockedBackendDataNadolazeci}
+        data={activeEventsData}
         skipPageReset={false}
       />
       <div className="w-full h-10 flex items-center justify-start pb-8 mt-10">
@@ -111,7 +127,7 @@ export const Eventi = () => {
       </div>
       <EventsTable
         columns={columnsProsli}
-        data={mockedBackendDataProsli}
+        data={passedEventsData}
         skipPageReset={false}
       />
     </div>

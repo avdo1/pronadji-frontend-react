@@ -15,7 +15,7 @@ type Props = {
 export const LoginModal = ({ open, setIsOpen }: Props) => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const { access_token, setAccessToken } = useGlobalContext();
+  const { setAccessToken } = useGlobalContext();
   const [validationErrors, setValidationErrors] = useState<any>({
     hasErrors: false,
     errorData: undefined,
@@ -23,12 +23,10 @@ export const LoginModal = ({ open, setIsOpen }: Props) => {
 
   const {
     mutate: doLogin,
-    isSuccess,
     isPending,
   } = useMutation({
     mutationFn: login,
     onSuccess: (data) => {
-      console.log("DATA --> ", data);
       setAccessToken(data.access_token);
       setIsOpen(false);
       window.location.replace("/admin");

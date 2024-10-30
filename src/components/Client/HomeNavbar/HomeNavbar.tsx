@@ -5,7 +5,7 @@ import { HomeNavbarInput } from "../HomeNavbarSearch/HomeNavbarInput";
 import { MobileHomeNavbar } from "./MobileHomeNavbar";
 
 export const HomeNavbar = () => {
-  const [isAdminSide, setIsAdminSide] = useState<boolean>(false);
+  const [, setIsAdminSide] = useState<boolean>(false);
   const pathName = useLocation().pathname;
   const [activeNav, setActiveNav] = useState<string | null>(null);
 
