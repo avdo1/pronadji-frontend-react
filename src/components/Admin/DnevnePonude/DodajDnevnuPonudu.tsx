@@ -5,11 +5,13 @@ import { createDailyOffer, updateDailyOffer } from "../../../api";
 interface Props {
   local?: any;
   editElement?: any;
+  setEditElement?: React.Dispatch<React.SetStateAction<any>>;
   setIsCreateForm?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export const DodajDnevnuPonudu = ({
   local,
   editElement,
+  setEditElement,
   setIsCreateForm,
 }: Props) => {
   const [nazivPonude, setNazivPonude] = useState(
@@ -32,6 +34,7 @@ export const DodajDnevnuPonudu = ({
     },
     onSuccess: () => {
       console.log("Daily Offer created successfully");
+      setIsCreateForm && setIsCreateForm(false);
     },
     onError: (error) => {
       console.error("Error creating daily offer:", error);
@@ -51,7 +54,7 @@ export const DodajDnevnuPonudu = ({
     },
     onSuccess: () => {
       console.log("Daily Offer updated successfully");
-      setIsCreateForm && setIsCreateForm(false);
+      setEditElement && setEditElement({});
     },
     onError: (error) => {
       console.error("Error updating daily offer:", error);

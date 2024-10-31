@@ -126,22 +126,32 @@ export const AdminPage = () => {
             !isCreateForm && (
               <>
                 {selectedElement === 3 && (
-                  <DodajEvent localId={id} editElement={editElement} />
+                  <DodajEvent
+                    localId={id}
+                    editElement={editElement}
+                    setEditElement={setEditElement}
+                  />
                 )}
                 {selectedElement === 4 && (
                   <DodajNovuKategoriju
                     local={localData}
                     editElement={editElement}
+                    setEditElement={setEditElement}
                   />
                 )}
                 {selectedElement === 5 && (
                   <DodajDnevnuPonudu
                     local={localData}
                     editElement={editElement}
+                    setEditElement={setEditElement}
                   />
                 )}
                 {selectedElement === 6 && (
-                  <DodajNoviOglas local={localData} editElement={editElement} />
+                  <DodajNoviOglas
+                    local={localData}
+                    editElement={editElement}
+                    setEditElement={setEditElement}
+                  />
                 )}
               </>
             )

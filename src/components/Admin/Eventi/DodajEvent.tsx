@@ -6,11 +6,13 @@ import { createEvent, updateEvent } from "../../../api";
 interface Props {
   localId?: string;
   editElement?: any;
+  setEditElement?: React.Dispatch<React.SetStateAction<any>>;
   setIsCreateForm?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export const DodajEvent = ({
   localId,
   editElement,
+  setEditElement,
   setIsCreateForm,
 }: Props) => {
   const [eventObj, setEventObj] = useState(
@@ -76,6 +78,7 @@ export const DodajEvent = ({
     },
     onSuccess: () => {
       console.log("Event updated successfully");
+      setEditElement && setEditElement({});
     },
     onError: (error) => {
       console.error("Error updating event:", error);

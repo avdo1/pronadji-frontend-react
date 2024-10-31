@@ -21,10 +21,7 @@ export const LoginModal = ({ open, setIsOpen }: Props) => {
     errorData: undefined,
   });
 
-  const {
-    mutate: doLogin,
-    isPending,
-  } = useMutation({
+  const { mutate: doLogin, isPending } = useMutation({
     mutationFn: login,
     onSuccess: (data) => {
       setAccessToken(data.access_token);

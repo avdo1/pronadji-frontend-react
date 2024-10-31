@@ -5,11 +5,13 @@ import { createJobOffer, updateJobOffer } from "../../../api";
 interface Props {
   local?: any;
   editElement?: any;
+  setEditElement?: React.Dispatch<React.SetStateAction<any>>;
   setIsCreateForm?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export const DodajNoviOglas = ({
   local,
   editElement,
+  setEditElement,
   setIsCreateForm,
 }: Props) => {
   const [nazivPozicije, setNazivPozicije] = useState(
@@ -58,6 +60,7 @@ export const DodajNoviOglas = ({
     },
     onSuccess: () => {
       console.log("Job Offer updated successfully");
+      setEditElement && setEditElement({});
     },
     onError: (error) => {
       console.error("Error updating job offer:", error);

@@ -6,11 +6,13 @@ import { createCategory, updateCategory } from "../../../api";
 interface DodajNovuKategorijuProp {
   local: any;
   editElement?: any;
+  setEditElement?: React.Dispatch<React.SetStateAction<any>>;
   setIsCreateForm?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export const DodajNovuKategoriju = ({
   local,
   editElement,
+  setEditElement,
   setIsCreateForm,
 }: DodajNovuKategorijuProp) => {
   const [nazivKategorije, setNazivKategorije] = useState(
@@ -74,6 +76,7 @@ export const DodajNovuKategoriju = ({
     },
     onSuccess: () => {
       console.log("Category updated successfully");
+      setEditElement && setEditElement({});
     },
     onError: (error) => {
       console.error("Error updating category:", error);
