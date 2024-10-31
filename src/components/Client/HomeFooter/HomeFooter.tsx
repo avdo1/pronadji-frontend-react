@@ -3,7 +3,7 @@ import { Clogo } from "../../../assets/ImagesFactory";
 import { Link, useLocation } from "react-router-dom";
 
 export const HomeFooter = () => {
-  const [isAdminSide, setIsAdminSide] = useState<boolean>(false);
+  const [, setIsAdminSide] = useState<boolean>(false);
   const route = useLocation().pathname;
   useEffect(() => {
     if (route.includes("/admin")) {

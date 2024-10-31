@@ -1,37 +1,68 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { EditPen, TrashCan } from "../../../assets/ImagesFactory";
 import { PricesTable } from "./PricesTable";
+import { Loader } from "../../Loader/Loader";
+import { deleteCategoryById, getCategoriesByLocalId } from "../../../api";
+interface CjenovnikProp {
+  localId: string;
+  setEditElement: React.Dispatch<React.SetStateAction<{}>>;
+}
+export const Cjenovnik = ({ localId, setEditElement }: CjenovnikProp) => {
+  const ActionDiv = ({ row }: any) => {
+    const queryClient = useQueryClient();
+    const { mutate: doDeleteCategory } = useMutation({
+      mutationFn: (categoryId: string) => deleteCategoryById(categoryId),
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ["getCategoriesByLocalId", localId],
+        });
+      },
+    });
 
-export const Cjenovnik = () => {
-  const ActionDiv = ({ row }: any) => (
-    <div
-      className="flex items-center justify-center w-full h-full"
-      {...row.getToggleRowExpandedProps({})}
-    >
-      <div className="w-8 h-8 cursor-pointer">{TrashCan}</div>
-      <div className="w-8 h-8 cursor-pointer">{EditPen}</div>
-    </div>
-  );
+    const handleDelete = () => {
+      const categoryId = row.original.id;
+      doDeleteCategory(categoryId);
+    };
+    return (
+      <div
+        className="flex items-center justify-center gap-4 w-full h-full"
+        {...row.getToggleRowExpandedProps({})}
+      >
+        <div onClick={handleDelete} className="w-8 h-8 cursor-pointer h-full">
+          {TrashCan}
+        </div>
+        <div
+          onClick={() => {
+            setEditElement(row.original);
+          }}
+          className="w-8 h-8 cursor-pointer h-full"
+        >
+          {EditPen}
+        </div>
+      </div>
+    );
+  };
 
   const columns = [
     {
       Header: "Naziv kategorije",
-      accessor: "nazivKategorije",
-      id: "nazivKategorije",
+      accessor: "categoryName",
+      id: "categoryName",
     },
     {
       Header: "Naziv proizvoda",
-      accessor: "nazivProizvoda",
-      id: "nazivProizvoda",
+      accessor: "name",
+      id: "name",
     },
     {
       Header: "Cijena proizvoda",
-      accessor: "cijenaProizvoda",
-      id: "cijenaProizvoda",
+      accessor: "price",
+      id: "price",
     },
     {
       Header: "Opis proizvoda",
-      accessor: "opisProizvoda",
-      id: "opisProizvoda",
+      accessor: "description",
+      id: "description",
     },
     {
       id: "action",
@@ -39,59 +70,24 @@ export const Cjenovnik = () => {
       Cell: ActionDiv,
     },
   ];
+  const { data: categoryData, isLoading } = useQuery({
+    queryKey: ["getCategoriesByLocalId", localId],
+    queryFn: () => getCategoriesByLocalId(localId),
+  });
 
-  const mockedBackendData = [
-    {
-      id: "123",
-      nazivKategorije: "Kategorija 1",
-      nazivProizvoda: [
-        { id: 1, naziv: "Espresso" },
-        { id: 2, naziv: "Espresso sa mlijekom" },
-        { id: 3, naziv: "Capuccino" },
-        { id: 4, naziv: "Macchiato" },
-      ],
-      cijenaProizvoda: [
-        { id: 1, cijena: "1.50 KM" },
-        { id: 2, cijena: "1.50 KM" },
-        { id: 3, cijena: "1.50 KM" },
-        { id: 4, cijena: "1.50 KM" },
-      ],
-      opisProizvoda: [
-        { id: 1, opis: "" },
-        { id: 2, opis: "" },
-        { id: 3, opis: "" },
-        { id: 4, opis: "" },
-      ],
-    },
-    {
-      id: "223",
-      nazivKategorije: "Kategorija 2",
-      nazivProizvoda: [
-        { id: 1, naziv: "Juicy" },
-        { id: 2, naziv: "Coca Cola" },
-        { id: 3, naziv: "Fanta" },
-        { id: 4, naziv: "Ledeni caj" },
-      ],
-      cijenaProizvoda: [
-        { id: 1, cijena: "3.00 KM" },
-        { id: 2, cijena: "3.00 KM" },
-        { id: 3, cijena: "3.00 KM" },
-        { id: 4, cijena: "3.00 KM" },
-      ],
-      opisProizvoda: [
-        { id: 1, opis: "" },
-        { id: 2, opis: "Breskva, Limun" },
-        { id: 3, opis: "" },
-        { id: 4, opis: "" },
-      ],
-    },
-  ];
+  if (isLoading) {
+    return (
+      <div>
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div className="w-full flex p-5">
       <PricesTable
         columns={columns}
-        data={mockedBackendData}
+        data={categoryData}
         skipPageReset={false}
       />
     </div>

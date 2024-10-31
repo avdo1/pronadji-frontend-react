@@ -10,9 +10,23 @@ import {
 import MaUTable from "@mui/material/Table";
 import { useSortBy, useTable, useExpanded } from "react-table";
 
+interface Product {
+  id: string;
+  name: string;
+  price: string;
+  description: string;
+}
+
+interface Category {
+  id: string;
+  description: string;
+  categoryName: string;
+  products: Product[];
+}
+
 type Props = {
   columns: any;
-  data: any;
+  data: Category[];
   skipPageReset: boolean;
 };
 
@@ -64,28 +78,23 @@ export const PricesTable = ({ columns, data, skipPageReset }: Props) => {
                   <React.Fragment key={`row-${i}`}>
                     <TableRow className="m-0 p-0" {...row.getRowProps()}>
                       {row.cells.map((cell: any, lidx) => {
-                        const value = cell.render("Cell");
-
                         if (
-                          cell.column.id === "nazivProizvoda" ||
-                          cell.column.id === "cijenaProizvoda" ||
-                          cell.column.id === "opisProizvoda"
+                          cell.column.id === "name" ||
+                          cell.column.id === "price" ||
+                          cell.column.id === "description"
                         ) {
-                          const data: any = row;
-                          let dataToShow: any = [];
+                          const data: any = row.original.products;
                           let keyOfElement: string;
+
                           switch (cell.column.id) {
-                            case "nazivProizvoda":
-                              dataToShow = data.original.nazivProizvoda;
-                              keyOfElement = "naziv";
+                            case "name":
+                              keyOfElement = "name";
                               break;
-                            case "cijenaProizvoda":
-                              dataToShow = data.original.cijenaProizvoda;
-                              keyOfElement = "cijena";
+                            case "price":
+                              keyOfElement = "price";
                               break;
-                            case "opisProizvoda":
-                              dataToShow = data.original.opisProizvoda;
-                              keyOfElement = "opis";
+                            case "description":
+                              keyOfElement = "description";
                               break;
                             default:
                               break;
@@ -100,14 +109,20 @@ export const PricesTable = ({ columns, data, skipPageReset }: Props) => {
                               {cell.render(() => {
                                 return (
                                   <div className="flex flex-col items-start gap-2 w-full">
-                                    {dataToShow.map((element: any) => (
-                                      <p
-                                        key={element.id}
-                                        className="font-sans font-semibold text-base text-gray-400"
-                                      >
-                                        {element[keyOfElement] || "-"}
+                                    {data.length > 0 ? (
+                                      data.map((product: any) => (
+                                        <p
+                                          key={product.id}
+                                          className="font-sans font-semibold text-base text-gray-400"
+                                        >
+                                          {product[keyOfElement] || "-"}
+                                        </p>
+                                      ))
+                                    ) : (
+                                      <p className="font-sans font-semibold text-base text-gray-400">
+                                        No products
                                       </p>
-                                    ))}
+                                    )}
                                   </div>
                                 );
                               })}

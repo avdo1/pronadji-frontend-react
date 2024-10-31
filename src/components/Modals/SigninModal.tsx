@@ -20,15 +20,14 @@ export const SigninModal = ({ open, setIsOpen }: Props) => {
     mutate: doSignup,
     data,
     isPending,
-    isSuccess,
   } = useMutation({
     mutationFn: signup,
-    onSuccess: (data) => {
+    onSuccess: () => {
       setIsOpen(false);
       window.location.replace("/admin");
     },
     onError: (error) => {
-      //
+      console.log(error);
     },
   });
 

@@ -6,12 +6,18 @@ type Props = {
   elements: any[];
   selectedElement: any;
   setSelectedElement: Dispatch<SetStateAction<any>>;
+  localname?: string;
+  isDisabled: boolean;
+  setEditElement: React.Dispatch<React.SetStateAction<{}>>;
 };
 
 export const Sidebar = ({
   elements,
   selectedElement,
   setSelectedElement,
+  localname,
+  isDisabled,
+  setEditElement,
 }: Props) => {
   return (
     <div className="w-1/5 min-h-full flex flex-col bg-gray-800 relative">
@@ -19,7 +25,7 @@ export const Sidebar = ({
         <p className="text-white font-light text-2xl">
           <span className="text-lg">Dobrodosli,</span>
         </p>
-        <p className="text-white font-light text-2xl">IME KAFICA</p>
+        <p className="text-white font-light text-2xl">{localname}</p>
       </div>
       <div className="w-full h-[89.7%] pt-5 flex flex-col pb-2">
         <div className="flex flex-col h-[50%] w-full gap-2">
@@ -30,7 +36,9 @@ export const Sidebar = ({
               }`}
               key={element.id}
               onClick={() => {
-                if (element.isEnabled) setSelectedElement(element.id);
+                if (element.isEnabled && !isDisabled)
+                  setSelectedElement(element.id);
+                setEditElement({});
               }}
               style={
                 element.id !== selectedElement ? { paddingLeft: "45px" } : {}

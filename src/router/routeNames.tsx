@@ -13,6 +13,12 @@ const generateRoute = (
 const routeNames = {
   home: (params?: Record<string, string>): string =>
     generateRoute("/naslovna", params),
+  mainLocals: (params?: Record<string, string>): string =>
+    generateRoute("/lokali", params),
+  category: (params?: Record<string, string>): string =>
+    generateRoute("/kategorija/:id", params),
+  adminLocal: (params?: Record<string, string>): string =>
+    generateRoute("/admin/:id", params),
   admin: (params?: Record<string, string>): string =>
     generateRoute("/admin", params),
   eventi: (params?: Record<string, string>): string =>
