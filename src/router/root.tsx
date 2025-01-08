@@ -1,48 +1,25 @@
-import { useContext, useEffect, useMemo } from "react";
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
-
-import { ProtectedRoute } from "./ProtectedRoute";
+import { Route, Routes } from "react-router-dom";
 import routeNames from "./routeNames";
-import TOKEN from "../lib/token";
-import { UserContext } from "../context/UserContext";
 import { HomePage } from "../pages/Home";
 import { EventsPage } from "../pages/Events";
 import { AboutPage } from "../pages/About";
 import ServicesPage from "../pages/Services";
 import { ContactPage } from "../pages/Contact";
 import { AdminPage } from "../pages/Admin";
-
-const publicRoutes = ["/login", "/reset-password"];
-const privateRoute = "/admin";
+import { MainLocals } from "../pages/MainLocals";
+import { Category } from "../pages/Category";
 
 export const RootRouter = () => {
-  const { user, isUserFetched, isUserAuthenticated } = useContext(UserContext);
-
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const isRoutePublic = useMemo(
-    () => publicRoutes.includes(location.pathname),
-    [location.pathname],
-  );
-
-  useEffect(() => {
-    // if (!TOKEN.get() || (!isUserAuthenticated && isUserFetched)) {
-    //   navigate(routeNames.home());
-    // }
-  }, [
-    isRoutePublic,
-    isUserAuthenticated,
-    isUserFetched,
-    location.pathname,
-    navigate,
-    user,
-  ]);
-
   return (
     <Routes>
       <Route path={routeNames.admin()} element={<AdminPage />} />
+      <Route
+        path={routeNames.adminLocal({ id: ":id" })}
+        element={<AdminPage />}
+      />
       <Route path={routeNames.home()} element={<HomePage />} />
+      <Route path={routeNames.mainLocals()} element={<MainLocals />} />
+      <Route path={routeNames.category()} element={<Category />} />
       <Route path={routeNames.eventi()} element={<EventsPage />} />
       <Route path={routeNames.oNama()} element={<AboutPage />} />
       <Route path={routeNames.usluge()} element={<ServicesPage />} />

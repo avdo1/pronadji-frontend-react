@@ -4,11 +4,11 @@ import { GalleryTable } from "./GalleryTable";
 export const Galerije = () => {
   const ActionDiv = ({ row }: any) => (
     <div
-      className="flex items-center justify-center w-full h-full space-x-4"
+      className="flex items-center justify-center gap-4 w-full h-full"
       {...row.getToggleRowExpandedProps({})}
     >
-      <div className="w-6 h-6">{TrashCan}</div>
-      <div className="w-6 h-6">{EditPen}</div>
+      <div className="w-8 h-8 cursor-pointer h-full">{TrashCan}</div>
+      <div className="w-8 h-8 cursor-pointer h-full">{EditPen}</div>
     </div>
   );
 

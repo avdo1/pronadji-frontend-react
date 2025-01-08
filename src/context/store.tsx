@@ -11,14 +11,10 @@ import TOKEN from "../lib/token";
 import { useQuery } from "@tanstack/react-query";
 import { getMe } from "../api";
 
-type DataType = {
-  firstName: string;
-};
-
 interface ContextProps {
   access_token: string | null;
   setAccessToken: Dispatch<SetStateAction<any>>;
-  user: Object | null;
+  user: any | null;
   setUser: Dispatch<SetStateAction<any>>;
 }
 
@@ -40,27 +36,23 @@ export const GlobalContextProvider = ({
   const [user, setUser] = useState<any>(null);
 
   const { data: me } = useQuery({
-    queryKey: ["userProfile"],
-    queryFn: getMe,
+    queryKey: ["getMe"],
+    queryFn: () => getMe(),
   });
-
-  const fetchMe = async () => {
-    await getMe();
-  };
 
   useEffect(() => {
     if (access_token) {
       TOKEN.set(access_token);
-      fetchMe();
+      setUser(me);
     }
     if (!access_token && TOKEN.get() !== undefined) {
       setAccessToken(TOKEN.get() as string);
     }
-  }, [access_token]);
+  }, [access_token, me]);
 
   useEffect(() => {
     if (me) {
-      setUser(me?.data);
+      setUser(me);
     }
   }, [me, user]);
 

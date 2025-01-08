@@ -40,7 +40,7 @@ export const EventsTable = ({ columns, data, skipPageReset }: Props) => {
                   <TableCell
                     {...column.getHeaderProps(column.getSortByToggleProps())}
                     className={`${
-                      column.id === "nazivEventa"
+                      column.id === "name"
                         ? "border-none border-b border-gray-300 min-w-[500px]"
                         : "border-none"
                     }`}
@@ -48,7 +48,7 @@ export const EventsTable = ({ columns, data, skipPageReset }: Props) => {
                   >
                     <div
                       className={`${
-                        column.id === "nazivEventa"
+                        column.id === "name"
                           ? "flex items-center justify-start w-full h-full text-center"
                           : "flex items-center justify-center w-full h-full text-center"
                       }`}
@@ -67,8 +67,8 @@ export const EventsTable = ({ columns, data, skipPageReset }: Props) => {
             ))}
           </TableHead>
           <TableBody>
-            {rows.length > 0 &&
-              rows.map((row, i) => {
+            {rows?.length > 0 &&
+              rows?.map((row, i) => {
                 prepareRow(row);
                 return (
                   <React.Fragment key={`row-${i}`}>
@@ -76,7 +76,7 @@ export const EventsTable = ({ columns, data, skipPageReset }: Props) => {
                       {row.cells.map((cell: any, lidx) => {
                         const value = cell.render("Cell");
 
-                        if (cell.column.id === "nazivEventa") {
+                        if (cell.column.id === "name") {
                           return (
                             <TableCell
                               {...cell.getCellProps()}

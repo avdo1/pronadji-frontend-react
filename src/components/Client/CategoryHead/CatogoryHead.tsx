@@ -1,13 +1,24 @@
 import React from "react";
-
-export const CategoryHead = () => {
+interface CategoryHeadProp {
+  categoryId?: string;
+  categoryName: string;
+}
+export const CategoryHead = ({
+  categoryId,
+  categoryName,
+}: CategoryHeadProp) => {
   return (
     <div className="w-full h-[60px] flex flex-row items-center justify-between bg-red-600 text-white font-sans text-lg font-bold px-8 md:px-5">
-      <div>Kategorija</div>
+      <div>{categoryName}</div>
       <div>
-        <a href="/" className="cursor-pointer font-light">
-          {"POGLEDAJ SVE >"}
-        </a>
+        {categoryId && (
+          <a
+            href={`/kategorija/${categoryId}`}
+            className="cursor-pointer font-light"
+          >
+            {"POGLEDAJ SVE >"}
+          </a>
+        )}
       </div>
     </div>
   );

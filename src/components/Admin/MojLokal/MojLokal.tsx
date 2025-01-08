@@ -2,8 +2,11 @@ import { useState } from "react";
 import { AdminInput } from "../AdminInput/AdminInput";
 import { useMutation } from "@tanstack/react-query";
 import { createLocal } from "../../../api";
-
-export const MojLokal = () => {
+import { AdminSelectInput } from "../AdminSelectInput/AdminSelectInput";
+interface MojLokalProps {
+  isDisabled: boolean;
+}
+export const MojLokal = ({ isDisabled }: MojLokalProps) => {
   const [mojLokalObj, setMojLokalObj] = useState({
     name: "",
     email: "",
@@ -14,16 +17,13 @@ export const MojLokal = () => {
     facebook: "",
     twitter: "",
     instagram: "",
+    subCategoryId: "00000000-0000-2000-a000-000000000001",
   });
 
-  const {
-    mutate: doCreateLocal,
-    isSuccess,
-    isPending,
-  } = useMutation({
+  const { mutate: doCreateLocal } = useMutation({
     mutationFn: (data: typeof mojLokalObj) => createLocal(data),
-    onSuccess: () => {
-      window.location.replace("/admin");
+    onSuccess: (data) => {
+      window.location.replace(`/admin/${data.id}`);
     },
     onError: (error) => {
       console.error("Error creating local:", error);
@@ -33,7 +33,9 @@ export const MojLokal = () => {
   const onCreate = async () => {
     doCreateLocal(mojLokalObj);
   };
-
+  const handleSelectChange = (selectedValue: string) => {
+    setMojLokalObj((prev) => ({ ...prev, subCategoryId: selectedValue }));
+  };
   return (
     <div className="w-full flex flex-row pt-10 pb-5 sm:pt-10 sm:pb-5 flex-wrap">
       <div className="flex flex-col w-full sm:w-1/2 pl-5 gap-5">
@@ -82,6 +84,35 @@ export const MojLokal = () => {
           placeholder="Unesite kratki opis svog lokala"
           required
         />
+        <AdminSelectInput
+          title="Kategorija lokala"
+          value={mojLokalObj.subCategoryId}
+          setValue={handleSelectChange}
+          options={[
+            {
+              id: "00000000-0000-2000-a000-000000000001",
+              name: "Kafa",
+            },
+            {
+              id: "00000000-0000-2000-a000-000000000004",
+              name: "Nocni klub",
+            },
+            {
+              id: "00000000-0000-2000-a000-000000000005",
+              name: "Restoran",
+            },
+            {
+              id: "00000000-0000-2000-a000-000000000003",
+              name: "FastFood",
+            },
+            {
+              id: "00000000-0000-2000-a000-000000000002",
+              name: "Nargila",
+            },
+          ]}
+          placeholder="Odaberite kategoriju lokala"
+          required
+        />
       </div>
       <div className="flex flex-col w-full sm:w-1/2 pl-5 gap-5">
         <AdminInput
@@ -120,6 +151,7 @@ export const MojLokal = () => {
           required
         />
         <button
+          disabled={isDisabled}
           onClick={() => {
             onCreate();
           }}
