@@ -17,6 +17,7 @@ export const RootRouter = () => {
         path={routeNames.adminLocal({ id: ":id" })}
         element={<AdminPage />}
       />
+      <Route path={routeNames.start()} element={<HomePage />} />
       <Route path={routeNames.home()} element={<HomePage />} />
       <Route path={routeNames.mainLocals()} element={<MainLocals />} />
       <Route path={routeNames.category()} element={<Category />} />

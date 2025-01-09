@@ -11,6 +11,8 @@ const generateRoute = (
   return route;
 };
 const routeNames = {
+  start: (params?: Record<string, string>): string =>
+    generateRoute("/", params),
   home: (params?: Record<string, string>): string =>
     generateRoute("/naslovna", params),
   mainLocals: (params?: Record<string, string>): string =>
